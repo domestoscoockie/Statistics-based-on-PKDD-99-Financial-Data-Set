@@ -7,7 +7,7 @@ from pandas import DataFrame
 # import dash_bootstrap_components as dbc
 
 
-class MainChart():
+class FrontPage():
     def __init__(self):
         super().__init__()
         self.dict_names=['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia', 'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
@@ -18,7 +18,7 @@ class MainChart():
          
         self.app = Dash()
         self.fg = px.histogram(self.df, x='status', y='loan_count')
-
+        
         self.app.layout = html.Div([
             html.H2(children="Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set"),
             dcc.Dropdown(self.dict_names,
@@ -44,5 +44,5 @@ class MainChart():
 
 
 if __name__ == '__main__':
-    x = MainChart()
-    x.app.run(debug=True)
+    application = FrontPage()
+    application.app.run(debug=True)
