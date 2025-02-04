@@ -3,7 +3,7 @@
     <div style="display: inline-block;">
         <h2 style="display: inline-block; vertical-align: middle; margin-top: 0;">STATISTICS-BASED-ON-PKDD-99-FINANCIAL-DATA-SET.GIT</h2>
         <p>
-	<em><code>❯ REPLACE-ME</code></em>
+	<em><code>❯ </code></em>
 </p>
         <p>
 	<img src="https://img.shields.io/github/license/domestoscoockie/Statistics-based-on-PKDD-99-Financial-Data-Set.git?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
@@ -24,29 +24,19 @@
 
 - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
-- [Features](#features)
 - [Project Structure](#project-structure)
 	- [Project Index](#project-index)
-- [Getting Started](#getting-started)
 	- [Prerequisites](#prerequisites)
-	- [Installation](#installation)
-	- [Usage](#usage)
-	- [Testing](#testing)
 - [Project Roadmap](#project-roadmap)
 
 ---
 
 ##  Overview
 
-<code>❯ REPLACE-ME</code>
+<code>❯  This app is about to visualize statistics based on PKDD’99 Discovery Challenge Financial Data Set.</code>
 
 ---
 
-##  Features
-
-<code>❯ REPLACE-ME</code>
-
----
 
 ##  Project Structure
 
@@ -138,8 +128,6 @@
 </details>
 
 ---
-##  Getting Started
-
 ###  Prerequisites
 
 Before getting started with Statistics-based-on-PKDD-99-Financial-Data-Set.git, ensure your runtime environment meets the following requirements:
@@ -148,57 +136,18 @@ Before getting started with Statistics-based-on-PKDD-99-Financial-Data-Set.git, 
 - **Package Manager:** Pip
 
 
-###  Installation
 
-Install Statistics-based-on-PKDD-99-Financial-Data-Set.git using one of the following methods:
-
-**Build from source:**
-
-1. Clone the Statistics-based-on-PKDD-99-Financial-Data-Set.git repository:
-```sh
-❯ git clone https://github.com/domestoscoockie/Statistics-based-on-PKDD-99-Financial-Data-Set.git
-```
-
-2. Navigate to the project directory:
-```sh
-❯ cd Statistics-based-on-PKDD-99-Financial-Data-Set.git
-```
-
-3. Install the project dependencies:
+1. Install the project dependencies:
 
 
 **Using `pip`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-INSTALL-COMMAND-HERE'
-```
-
-
-
-
-###  Usage
-Run Statistics-based-on-PKDD-99-Financial-Data-Set.git using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-RUN-COMMAND-HERE'
-```
-
-
-###  Testing
-Run the test suite using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="" />]()
-
-```sh
-❯ echo 'INSERT-TEST-COMMAND-HERE'
-```
 
 
 ---
 ##  Project Roadmap
 
 - [X] **`Task 1`**: <strike>The data was pre-cleaned and added to the created database and the basis for the dash application was created</strike>
-- [ ] **`Task 2`**: <strike>Cleaning the existing code and extending the dash application</strike>
+- [ ] **`Task 2`**: Cleaning the existing code and extending the dash application
 - [ ] **`Task 3`**: 
 
 ---
