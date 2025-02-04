@@ -35,6 +35,10 @@ class CreditScore(Connection_to_db):
 
             return result
 
+
+    def __repr__(self):
+        return 'CreditScore()'
+
 class CursorAsDataFrame(CreditScore):
 
     def score_by_region(self, region_name: str):
@@ -46,6 +50,9 @@ class CursorAsDataFrame(CreditScore):
         cursor = super().number_of_trans_per_account()
         return pd.DataFrame(cursor.fetchall(), columns=cursor.keys())
 
+
+    def __repr__(self):
+        return 'CursorAsDataFrame()'
 
 if __name__ == '__main__':
     x = CursorAsDataFrame()

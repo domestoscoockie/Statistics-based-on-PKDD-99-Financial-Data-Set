@@ -40,6 +40,10 @@ class FrontPage():
             df = self.cursor_df.score_by_region(drop_down)
             fig = px.histogram(df, x='status', y='loan_count')
             return fig
+        
+        
+        def __repr__(self):
+            return 'FrontPage()'
 
 
 

@@ -30,3 +30,6 @@ class Connection_to_db:
     @property
     def engine(self):
         return self._engine
+
+    def __repr__(self):
+        return 'Connection_to_db()'
