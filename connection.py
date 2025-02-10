@@ -13,7 +13,7 @@ class Connection_to_db:
         account_name = os.getenv('account_name')
         psw = os.getenv('password')
 
-        url = f'postgresql+pg8000://{account_name}:{psw}@localhost/{db_name}'
+        url = f'postgresql+pg8000://{account_name}:{psw}@5432/{db_name}'
 
         self._engine = sqlalchemy.create_engine(url)
         

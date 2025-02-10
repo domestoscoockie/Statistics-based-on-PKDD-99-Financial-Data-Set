@@ -7,12 +7,12 @@ from pandas import DataFrame
 # import dash_bootstrap_components as dbc
 
 
-class FrontPage():
+class FrontPage:
     def __init__(self):
         super().__init__()
         self.dict_names=['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia', 'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
 
-        region_name = 'Prague'
+        region_name = ''
         self.cursor_df = CursorAsDataFrame()
         self.df= self.cursor_df.score_by_region(region_name)
          
@@ -41,7 +41,7 @@ class FrontPage():
             fig = px.histogram(df, x='status', y='loan_count')
             return fig
         
-        
+
         def __repr__(self):
             return 'FrontPage()'
 
