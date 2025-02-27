@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 from unittest.mock import patch, Mock
-from connection import Connection_to_db
+from trash.connection import Connection_to_db
 import tempfile
 
 class TestConnection:

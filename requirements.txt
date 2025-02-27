@@ -3,3 +3,4 @@ pandas
 sqlalchemy
 python-dotenv
 pg8000
+dash_bootstrap_components
