@@ -6,7 +6,6 @@ from sqlalchemy import Integer, String, ForeignKey, DateTime,\
 from flask_sqlalchemy.model import DefaultMeta
 from PKDD import db
 
-Model: DefaultMeta = db.Model
 
 class Trans(db.Model):
     __tablename__ = 'trans'

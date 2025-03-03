@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content section">
+    <h1>Register</h1>
+    <form id="register-id" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.username.label(class="form-control-label") }}
+            <div class="control">
+                {{ form.username(class="input", placeholder="Username") }}
+            </div>
+            {% for error in form.username.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.email.label(class="form-control-label") }}
+            <div class="control">
+                {{ form.email(class="input", placeholder="Email") }}
+            </div>
+            {% for error in form.email.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.password.label(class="form-control-label") }}
+            <div class="control">
+                {{ form.password(class="input", placeholder="Password") }}
+            </div>
+            {% for error in form.password.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <div class="field">
+            {{ form.confirm_password.label(class="form-control-label") }}
+            <div class="control">
+                {{ form.confirm_password(class="input", placeholder="Confirm Password") }}
+            </div>
+            {% for error in form.confirm_password.errors %}
+                <p class="help is-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+        <button class="g-recaptcha btn btn-primary" data-sitekey="{{ site_key }}" 
+            data-callback='onSubmit' data-action='submit'>Verify yourself</button>
+        <div class="field">
+            <div class="control">
+                {{ form.submit(class="button is-link") }}
+            </div> 
+        </div>
+
+    </form>
+{% endblock content %}

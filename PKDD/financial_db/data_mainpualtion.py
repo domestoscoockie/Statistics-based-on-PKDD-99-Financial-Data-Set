@@ -1,7 +1,7 @@
 import numpy as np
 from time import time
 from PKDD.financial_db.financial_models import Account, Trans, Loan, Order,Card, Disposition, Client,\
-    District, Model
+    District
 from sqlalchemy.orm import Session
 import pandas as pd
 from typing import List
@@ -11,7 +11,7 @@ from PKDD.financial_db.wrong_values import values_to_change
 
 class RepairData:
 
-    def __init__(self, csvs: List[str], tables: List[Type[Model]]) -> None:
+    def __init__(self, csvs: List[str], tables: List) -> None:
         self.csvs = csvs
         self.tables = tables
 
@@ -70,7 +70,7 @@ class FinancialDataBase:
             self.session.commit()
 
 
-    def upload_data(self, data_frames:dict[Model:pd.DataFrame]) -> None:
+    def upload_data(self, data_frames:dict[db.Model:pd.DataFrame]) -> None:
             for table, df in data_frames.items():
                 records = df.to_dict(orient='records')
                 self.session.bulk_insert_mappings(table,records)

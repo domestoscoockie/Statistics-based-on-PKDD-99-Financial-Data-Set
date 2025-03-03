@@ -4,3 +4,8 @@ sqlalchemy
 python-dotenv
 pg8000
 dash_bootstrap_components
+email_validator
+flask-login-0.6.3
+flask-bcrypt-1.0.1
+flask-mail-0.10.0
+authlib-1.5.1
