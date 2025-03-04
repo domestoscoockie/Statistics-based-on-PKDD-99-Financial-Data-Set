@@ -3,7 +3,7 @@ from PKDD.main.routes import download, home
 from test_PKDD import conftest
 from unittest.mock import patch, Mock
 import os
-from flask import current_app
+from flask import current_app, url_for
 
 def test_invalid_route(client):
     response = client.get('/nonexistent')
@@ -57,3 +57,9 @@ def test_download_not_found_mock_os(mock_exists, client, monkeypatch):
     monkeypatch.setitem(current_app.config, 'UPLOAD_DIRECTORY', '/some/fake/path')
     response = client.get('/download')
     assert response.status_code == 404
+
+def test_download_authentication_redirect(client, monkeypatch):
+    monkeypatch.setitem(client.application.config, 'LOGIN_DISABLED', False)
+    response = client.get('/download', follow_redirects=False)
+    assert response.status_code == 302
+    

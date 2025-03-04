@@ -41,7 +41,7 @@ def app():
         db.create_all(bind_key='users') 
         yield app 
         db.drop_all(bind_key='users')  
-        
+
 @pytest.fixture
 def client(app):
     return app.test_client()
