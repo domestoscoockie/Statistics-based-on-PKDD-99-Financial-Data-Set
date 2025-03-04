@@ -1,18 +1,23 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint,\
-send_from_directory
+current_app
+from flask.helpers import send_from_directory
 from PKDD import db
 from flask import Blueprint
+from flask_login import login_required
 
 main = Blueprint('main', __name__)
 
 
-@main.route('/')
-@main.route('/home')
+@main.route('/', methods=['GET'])
+@main.route('/home', methods=['GET'])
 def home():
     return render_template('home.html')
 
 
-@main.route('/download')
+@main.route('/download', methods=['GET'])
+@login_required
 def download():
-    return send_from_directory('static/cleaned_csvs', 'cleaned_csvs.zip', as_attachment=True)
+    path = current_app.config['UPLOAD_DIRECTORY']
+    print(f"UPLOAD_DIRECTORY: {path}") 
+    return send_from_directory(path, 'cleaned_csvs.zip', as_attachment=True)
 

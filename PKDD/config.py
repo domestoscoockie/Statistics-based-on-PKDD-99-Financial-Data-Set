@@ -17,3 +17,4 @@ class Config:
     SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
     RECAPTCHA_KEY = os.getenv('RECAPTCHA_KEY')
     RECAPTCHA_VERIFY_URL = os.getenv('RECAPTCHA_VERIFY_URL')
+    UPLOAD_DIRECTORY = 'static/cleaned_csvs'
