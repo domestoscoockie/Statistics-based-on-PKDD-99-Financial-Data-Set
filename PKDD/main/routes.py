@@ -18,6 +18,5 @@ def home():
 @login_required
 def download():
     path = current_app.config['UPLOAD_DIRECTORY']
-    print(f"UPLOAD_DIRECTORY: {path}") 
     return send_from_directory(path, 'cleaned_csvs.zip', as_attachment=True)
 
