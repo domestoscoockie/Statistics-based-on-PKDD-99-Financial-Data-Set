@@ -36,7 +36,7 @@ If you did not make this request then simply ignore this email and no changes wi
 def recaptcha_register_verify():
     response = request.form['g-recaptcha-response']
     verify_response = requests.post(
-    url=f'{current_app.config['RECAPTCHA_VERIFY_URL']}?secret={current_app.config['RECAPTCHA_KEY']}&response={response}'
+        url=f"{current_app.config['RECAPTCHA_VERIFY_URL']}?secret={current_app.config['RECAPTCHA_KEY']}&response={response}"
     ).json()
-    if verify_response['success'] == False:
-        abort(401)
+    if not verify_response.get('success', False):
+        abort(401, description="reCAPTCHA verification failed")

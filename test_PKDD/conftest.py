@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import warnings
+from PKDD.users.users_models import User
 
 
 class TestConfig:
@@ -21,9 +22,9 @@ class TestConfig:
     MAIL_USERNAME = None
     MAIL_PASSWORD = None
     MAIL_DEFAULT_SENDER = None
-    SITE_KEY = None 
-    RECAPTCHA_KEY = None
-    RECAPTCHA_VERIFY_URL = None
+    SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
+    RECAPTCHA_KEY = os.getenv('RECAPTCHA_KEY')
+    RECAPTCHA_VERIFY_URL = os.getenv('RECAPTCHA_VERIFY_URL')
     UPLOAD_DIRECTORY = 'static/cleaned_csvs'
 
 @pytest.fixture
@@ -37,11 +38,14 @@ def app():
     app.config['LOGIN_DISABLED'] = True  
     app.config['SERVER_NAME'] = 'localhost'
 
-
-
+    with app.app_context():
+        yield app  
+        
+@pytest.fixture
+def db_session(app):
     with app.app_context():
         db.create_all(bind_key='users') 
-        yield app 
+        yield db
         db.drop_all(bind_key='users')  
 
 @pytest.fixture

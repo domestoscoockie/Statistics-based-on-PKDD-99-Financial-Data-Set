@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     username: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(60), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    date_created: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
     number_of_downloads: Mapped[int] = mapped_column(Integer, default=0)
 
 
