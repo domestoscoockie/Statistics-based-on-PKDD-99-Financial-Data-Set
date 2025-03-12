@@ -47,7 +47,7 @@ def test_login_success(mock_user, mock_form, client, db_session):
 @patch('flask_login.utils._get_user', return_value=Mock(is_authenticated=False))
 @patch('PKDD.users.forms.LoginForm')
 def test_login_not_success(mock_user, mock_form, client, db_session):
-    mock_form.return_value.validate_on_submit.return_value = True
+    mock_form.validate_on_submit.return_value = True
     
     with Session(db_session.engines['users']) as session:
         password = bcrypt.generate_password_hash('Password123!').decode('utf-8')
@@ -63,4 +63,4 @@ def test_login_not_success(mock_user, mock_form, client, db_session):
 
         assert response.status_code == 200
 
- 
+
