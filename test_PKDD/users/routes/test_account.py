@@ -61,3 +61,4 @@ def test_get(mock_get_user, client):
     assert b'TestUser' in response.data  
     assert b'test@test.com' in response.data  
     assert response.status_code == 200 
+
