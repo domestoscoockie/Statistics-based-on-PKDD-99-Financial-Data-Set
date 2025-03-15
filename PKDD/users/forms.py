@@ -3,7 +3,9 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError
 from flask_login import current_user
 from PKDD.users.users_models import User
-
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from PKDD import db
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()]) 
@@ -13,11 +15,13 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+        with Session(db.engines['users']) as session:
+            user = session.scalars(select(User).where(User.username == username.data)).one_or_none()
         if user:
             raise ValidationError('That username is already taken. Please choose a different one.')
     def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+        with Session(db.engines['users']) as session:
+            user = session.scalars(select(User).where(User.email == email.data)).one_or_none()
         if user:
             raise ValidationError('That email is already taken. Please choose a different one.')
 
@@ -38,13 +42,15 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != current_user.username:
-            user = User.query.filter_by(username=username.data).first()
+            with Session(db.engines['users']) as session:
+                user = session.scalars(select(User).where(User.username == username.data)).one_or_none()
             if user:
                 raise ValidationError('That username is already taken. Please choose a different one.')
 
     def validate_email(self, email):
         if email.data != current_user.email:
-            user = User.query.filter_by(email=email.data).first()
+            with Session(db.engines['users']) as session:
+                user = session.scalars(select(User).where(User.email == email.data)).one_or_none()
             if user:
                 raise ValidationError('That email is already taken. Please choose a different one.')
             
@@ -54,8 +60,9 @@ class RequestResetForm(FlaskForm):
                         validators=[DataRequired(), Email()])
     submit = SubmitField('Request Password Reset')
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+    def validate_email(self, email):        
+        with Session(db.engines['users']) as session:
+            user = session.scalars(select(User).where(User.email == email.data)).one_or_none()
         if user is None:
             raise ValidationError('There is no account with that email. You must register first.')
 

@@ -37,8 +37,8 @@ def test_login_success(mock_user, mock_form, client, db_session):
         'email': 'test@example.com',
         'password': 'Password123!',
         'confirm_password': 'Password123!', 'submit':True}, follow_redirects=False)
-        user = session.execute(select(User).where(User.email=='test@example.com')
-                               ).scalar_one_or_none()
+        user = session.scalars(select(User).where(User.email=='test@example.com')
+                               ).one_or_none()
         with client.application.test_request_context():
             login_user(user, remember=mock_form.return_value)
         

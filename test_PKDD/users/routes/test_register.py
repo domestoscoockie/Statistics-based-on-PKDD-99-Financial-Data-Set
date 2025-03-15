@@ -55,7 +55,7 @@ def test_register_user_added_to_db( mock_hash_password, mock_recaptcha, mock_for
     mock_form.return_value.confirm_password.data = 'Password123!'
 
     with Session(db_session.engines['users']) as session:     
-        assert session.execute(select(User)
+        assert session.scalars(select(User)
                 .where(User.username == 'testuser')).fetchall() == []
         response = client.post('/register',  data={
         'username': 'testuser',
@@ -65,11 +65,11 @@ def test_register_user_added_to_db( mock_hash_password, mock_recaptcha, mock_for
         'g-recaptcha-response': 'dummy-token',
         'submit': True}, follow_redirects=False)
         session.commit()
-        user =  session.execute(select(User)
-                .where(User.username == 'testuser')).scalar_one_or_none()
-        assert user is not None
-        assert user.password != 'Password123!'
-        assert check_password_hash(user.password,'Password123!')
-        
-        
+        user =  session.scalars(select(User)
+                    .where(User.username == 'testuser')).one_or_none()
+    assert user is not None
+    assert user.password != 'Password123!'
+    assert check_password_hash(user.password,'Password123!')
+    
+    
         

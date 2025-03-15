@@ -12,8 +12,8 @@ class TestConfig:
     load_dotenv()
     '''Konfiguracja dla testów.'''
     SECRET_KEY = 'test_secret'
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_FINANCIAL_DATABASE_URI') 
-    SQLALCHEMY_BINDS = {'users': 'sqlite:///:memory:'} 
+    SQLALCHEMY_BINDS = {'users': 'sqlite:///:memory:',
+                        'statistics': os.getenv('SQLALCHEMY_FINANCIAL_DATABASE_URI')} 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'localhost'  
     MAIL_PORT = 1025

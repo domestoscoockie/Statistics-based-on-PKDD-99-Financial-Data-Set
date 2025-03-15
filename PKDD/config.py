@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 class Config:
     load_dotenv()
     SECRET_KEY = os.getenv('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_FINANCIAL_DATABASE_URI')
-    SQLALCHEMY_BINDS = {'users' : os.getenv('SQLALCHEMY_USERS_DATABASE_URI')}
+    SQLALCHEMY_BINDS = {'users' : os.getenv('SQLALCHEMY_USERS_DATABASE_URI'),
+                        'statistics': os.getenv('SQLALCHEMY_FINANCIAL_DATABASE_URI')}
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587

@@ -9,6 +9,7 @@ from PKDD import db
 
 class Trans(db.Model):
     __tablename__ = 'trans'
+    __bind_key__ = 'statistics'
 
     trans_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     account_id: Mapped[int] = mapped_column(Integer,ForeignKey('account.account_id'))
@@ -26,6 +27,7 @@ class Trans(db.Model):
 
 class Loan(db.Model):
     __tablename__ = 'loan'
+    __bind_key__ = 'statistics'
     
     loan_id: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
     account_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey('account.account_id'))
@@ -40,6 +42,7 @@ class Loan(db.Model):
 
 class Order(db.Model):
     __tablename__ = 'order'
+    __bind_key__ = 'statistics'
 
     order_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     account_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey('account.account_id'))
@@ -53,6 +56,7 @@ class Order(db.Model):
 
 class Account(db.Model):
     __tablename__ = 'account'
+    __bind_key__ = 'statistics'
     
     account_id: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
     district_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey('district.district_id'))
@@ -68,6 +72,7 @@ class Account(db.Model):
 
 class Card(db.Model):
     __tablename__ = 'card'
+    __bind_key__ = 'statistics'
 
     card_id: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
     disposition_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey('disposition.disposition_id'))
@@ -79,6 +84,7 @@ class Card(db.Model):
 
 class Disposition(db.Model):
     __tablename__ = 'disposition'
+    __bind_key__ = 'statistics'
 
     disposition_id: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
     client_id: Mapped[int] = mapped_column(SmallInteger, ForeignKey('client.client_id'))
@@ -92,6 +98,7 @@ class Disposition(db.Model):
 
 class Client(db.Model):
     __tablename__ = 'client'
+    __bind_key__ = 'statistics'
     
     client_id: Mapped[int] = mapped_column(SmallInteger,primary_key=True)
     birth_number: Mapped[str] = mapped_column(String(6))
@@ -104,6 +111,7 @@ class Client(db.Model):
 
 class District(db.Model):
     __tablename__ = 'district'
+    __bind_key__ = 'statistics'
 
     district_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     district_name: Mapped[str] = mapped_column(String(30))

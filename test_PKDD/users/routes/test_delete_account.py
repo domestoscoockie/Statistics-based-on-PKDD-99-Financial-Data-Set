@@ -23,7 +23,7 @@ def test_delete_account_valid_token(mock_get_user, mock_verify_token, client, db
     assert b'Your account has been deleted!' in response.data
     assert response.status_code == 200
     with Session(db_session.engines['users']) as session:
-        assert session.execute(select(User).where(User.username == 'testuser')).scalar_one_or_none() == None
+        assert session.scalars(select(User).where(User.username == 'testuser')).one_or_none() == None
 
 @patch('PKDD.users.routes.User.verify_token')
 @patch('flask_login.utils._get_user', return_value=Mock(is_authenticated=True, username='TestUser', email='test@test.com'))

@@ -9,7 +9,8 @@ from PKDD.users.users_models import User
 from PKDD import bcrypt
 from PKDD.users.utils import send_reset_email, send_delete_account_email, recaptcha_register_verify
 import requests
-
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 users = Blueprint('users', __name__)
 
 @users.route('/register', methods=['GET','POST'])
@@ -36,7 +37,8 @@ def login():
         return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        with Session(db.engines['users']) as session:
+            user = session.scalars(select(User).where(User.email == form.email.data)).one_or_none()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -98,7 +100,8 @@ def reset_request():
     
     form = RequestResetForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        with Session(db.engines['users']) as session:
+            user = session.scalars(select(User).where(User.email == form.email.data)).one_or_none()
         send_reset_email(user)
         flash('An email with instructions has been sent', 'info')
         return redirect(url_for('users.login'))

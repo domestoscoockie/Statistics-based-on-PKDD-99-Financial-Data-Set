@@ -2,7 +2,8 @@ from datetime import datetime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 from sqlalchemy import Integer, String, ForeignKey, DateTime,\
-    Numeric, Date, SmallInteger
+    Numeric, Date, SmallInteger, select
+from sqlalchemy.orm import Session
 from flask_sqlalchemy.model import DefaultMeta
 from PKDD import db
 from authlib.jose import JsonWebToken
@@ -11,12 +12,14 @@ from flask import current_app
 from PKDD import login_manager
 from flask_login import UserMixin
 
+
 jwt_instance = JsonWebToken(['HS256'])
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    with Session(db.engines['users']) as session:
+        return session.get(User, int(user_id))
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -48,6 +51,8 @@ class User(db.Model, UserMixin):
         user_id = claims.get('user_id')
         if user_id is None:
             return None
-        return User.query.get(user_id)
+        
+        with Session(db.engines['users']) as session:
+            return session.get(User, 'user_id') 
             
         
