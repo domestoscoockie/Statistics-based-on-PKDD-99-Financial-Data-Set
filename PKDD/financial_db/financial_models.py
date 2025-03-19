@@ -6,6 +6,9 @@ from sqlalchemy import Integer, String, ForeignKey, DateTime,\
 from flask_sqlalchemy.model import DefaultMeta
 from PKDD import db
 
+'''
+Tables of PKDD'99 financial data set for postgres db
+'''
 
 class Trans(db.Model):
     __tablename__ = 'trans'
