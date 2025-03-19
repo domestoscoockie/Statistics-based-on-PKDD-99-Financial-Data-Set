@@ -1,32 +1,45 @@
-version: '3.8'
 
 services:
   web:
-    image: python:3.13.1-slim
-    container_name: python_app
+    build: .
+    ports:
+      - "80:5000"
     volumes:
-      - .:/app
-    working_dir: /app
-    command: python app.py
+      - .:/code
     environment:
-      - POSTGRES_USER=project
-      - POSTGRES_PASSWORD=WoaTR8oS473
-      - POSTGRES_DB=financial_data_set
-      - DB_HOST=db
+      FLASK_DEBUG: "0"
     depends_on:
       - db
+    command: ["sh", "-c", "./wait-for-it.sh db:5432 -- python /code/app.py && tail -f /dev/null"]
 
   db:
-    image: postgres:13
-    container_name: postgres_db
+    image: postgres:latest
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: project
-      POSTGRES_PASSWORD: ...
-      POSTGRES_DB: financial_data_set
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB_2: ${POSTGRES_DB_2}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  db_init:
+    build:
+      context: .
+      dockerfile: dockerfile.init
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB_2: ${POSTGRES_DB_2}
+    volumes:
+      - .:/code
+    command: ["sh", "-c", "./wait-for-it.sh db:5432 -- python /code/create_db_app.py"]
+    restart: "no"
 
 volumes:
-  pgdata:    
+  db_data:

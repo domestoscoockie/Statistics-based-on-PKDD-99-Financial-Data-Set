@@ -1,40 +1,47 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
-<div class="row">
-    <div class="col-12 text-center">
-        <h5 class="mb-4" style="font-size: 24px; font-family: Arial;">
-            Made by Karol Grabowski
-        </h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="text-center text-info mb-2" style="font-size: 48px; font-family: Arial;">
+                Statistics Based on Data from the 'PKDD'99 Discovery Challenge Financial Dataset
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <h5 class="text-center text-secondary mb-4" style="font-size: 24px; font-family: Arial;">
+                Made by Karol Grabowski
+            </h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="margin-left: 30px; margin-right: 30px;">
+            <p style="font-size: 18px; font-family: Arial; text-indent: 30px;">
+                The following data represent a statistical dataset derived from financial data used in the 'PKDD'99 Discovery Challenge.
+                The dataset includes information on transactions, credits, and other financial operations useful for further analysis.
+                The data has been cleaned and transformed by me into a format suitable for a PostgreSQL database.
+                I have also prepared charts and statistics using Dash based on this dataset.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="margin-left: 30px; margin-right: 30px;">
+            <p style="font-size: 18px; font-family: Arial;">
+                Original Data Source:
+                <br>
+                <a class="text-info" href="https://web.archive.org/web/20180506061559/http://lisp.vse.cz/pkdd99/Challenge/chall.htm" target="_blank">Original Source</Source></a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <a href="{{ url_for('main.download') }}" class="btn btn-primary" role="button">Download Data</a>
+            <a href="{{ url_for('/charts/') }}" class="btn btn-secondary" role="button">View Charts</a>
+            <a href="https://github.com/yourusername/your-repo" class="btn btn-info" role="button" target="_blank">View on GitHub</a>
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12 text-center">
-        <h2 class="mb-2" style="font-size: 48px; font-family: Arial;">
-            Statistics Based on Data from the 'PKDD'99 Discovery Challenge Financial Dataset
-        </h2>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <p style="font-size: 18px; font-family: Arial;">
-            The following data represent a statistical dataset derived from financial data used in the 'PKDD'99 Discovery Challenge.
-            The dataset includes information on transactions, credits, and other financial operations useful for further analysis.
-        </p>
-    </div>
-<div class="row">
-    <div class="col-12">
-        <p style="font-size: 18px; font-family: Arial;">
-            Data Sources:
-            <br>
-            <a class="text-info" href="https://example.com/source1" target="_blank">Source 1</a> |
-            <a class="text-info" href="https://example.com/source2" target="_blank">Source 2</a>
-        </p>
-    </div>
-</div>
-</div>
-
-
 
 {% endblock content %}
