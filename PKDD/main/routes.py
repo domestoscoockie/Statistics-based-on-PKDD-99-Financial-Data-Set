@@ -20,3 +20,4 @@ def download():
     path = current_app.config['UPLOAD_DIRECTORY']
     return send_from_directory(path, 'cleaned_csvs.zip', as_attachment=True)
 
+

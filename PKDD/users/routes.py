@@ -11,7 +11,10 @@ from PKDD.users.utils import send_reset_email, send_delete_account_email, recapt
 import requests
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+
+
 users = Blueprint('users', __name__)
+
 
 @users.route('/register', methods=['GET','POST'])
 def register():
@@ -21,10 +24,11 @@ def register():
     if form.validate_on_submit():
         recaptcha_register_verify()
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data,
-                     password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
+        with Session(db.engines['users']) as session:
+            user = User(username=form.username.data, email=form.email.data,
+                         password=hashed_password)
+            session.add(user)
+            session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', title= 'Register',
@@ -48,7 +52,6 @@ def login():
 
     
     return render_template('login.html', title='Login', form=form)
-    
 
 
 @users.route('/logout', methods=['GET'])
@@ -123,8 +126,9 @@ def reset_password_token(token):
     form = ResetPasswordForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user.password = hashed_password
-        db.session.commit()
+        with Session(db.engines['users']) as session:
+            user.password = hashed_password
+            db.session.commit()
         return redirect(url_for('users.login'))
     return render_template('reset_password_token.html', form=form, title='nie')
 

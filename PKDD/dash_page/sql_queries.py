@@ -5,10 +5,11 @@ from sqlalchemy import select, func, extract
 import pandas as pd
 from PKDD import db
 
-
 class CreditScore:
+    ''' Queries for charts'''
     def __init__(self, session):
         self.session = session
+        
     def score_by_region(self, region_name: str):
             result = self.session.execute(
                 select(
@@ -56,7 +57,7 @@ class CreditScore:
         return 'CreditScore()'
 
 class CursorAsDataFrame(CreditScore):
-
+    '''Easer was to make it first df and then dict thats why this class was made '''
     def score_by_region(self, region_name: str):
         cursor =  super().score_by_region(region_name)
         return pd.DataFrame(cursor.fetchall(), columns=cursor.keys())
@@ -73,7 +74,3 @@ class CursorAsDataFrame(CreditScore):
     def __repr__(self):
         return 'CursorAsDataFrame()'
 
-if __name__ == '__main__':
-    x = CursorAsDataFrame()
-    print(x.number_of_tarns_per_month(1999)
-    )    

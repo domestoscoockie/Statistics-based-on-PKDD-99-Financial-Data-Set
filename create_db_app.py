@@ -37,4 +37,3 @@ if __name__ == '__main__':
             data = data_obj.load_data()
             FinancialDataBase(data)
         print(time()-t)
-        # cleaned_csv_files_creation(data)

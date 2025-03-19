@@ -1,9 +1,8 @@
 #!/bin/bash
-# create_databases.sh
+# This script creates new databases after first build of db container
 set -e
 
-# Tworzenie pierwszej bazy danych
+#finanical_data_set_new
 psql -U "$POSTGRES_USER" -d postgres -c "CREATE DATABASE $POSTGRES_DB;"
+#users_flask_dash
 psql -U "$POSTGRES_USER" -d postgres -c "CREATE DATABASE $POSTGRES_DB_2;"
-
-echo "Bazy danych $POSTGRES_DB i $POSTGRES_DB_2 zostały utworzone"

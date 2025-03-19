@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from PKDD import db
 
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()]) 
     email = StringField('Email', validators=[DataRequired(), Email()])

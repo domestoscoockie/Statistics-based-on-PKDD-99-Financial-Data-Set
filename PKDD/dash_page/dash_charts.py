@@ -6,11 +6,14 @@ from flask import Blueprint
 from PKDD import db
 from flask import current_app
 
-class FrontPage:
+class DashPage:
+    '''
+    Page with charts made with Dash. To make style more elegant theres also used dash_bootstrap 
+    '''
     def __init__(self):
         super().__init__()
         self.charts = Blueprint('charts', __name__)
-        self.dict_names = ['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia', 'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
+        self.regions = ['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia', 'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
 
         region_name = ''
         with current_app.app_context():
@@ -22,30 +25,32 @@ class FrontPage:
 
         self.app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],server=current_app, url_base_pathname='/charts/')
 
+        #charts
         self.fg_score_region = px.histogram(self.df_score_region, x='status', y='loan_count', title="Loan Count by Status", color_discrete_sequence=['#636EFA'])
         self.trans_region = px.histogram(self.df_trans_region, x='region', y='count', title="Transactions by Region", color_discrete_sequence=['#FFA07A'])
         self.fg_by_month = px.bar(self.df_by_month, x='month', y='count', title="Transactions per Month", color_discrete_sequence=['#00CC96'])
 
-        # Customize the figures
+        #style
         self.fg_score_region.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='white', size=18),
             title=dict(x=0.5, xanchor='center', font=dict(size=26))
-        )
+            )
         self.trans_region.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='white', size=18),
             title=dict(x=0.5, xanchor='center', font=dict(size=26))
-        )
+            )
         self.fg_by_month.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
             font=dict(color='white', size=18),
             title=dict(x=0.5, xanchor='center', font=dict(size=26))
-        )
+            )
 
+        #layout
         self.app.layout = dbc.Container([
             dbc.Row([
                 dbc.Col(html.H2("Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set", className="text-center text-info mb-2", style={'font-size': '48px', 'font-family': 'Arial'}), width=12)
@@ -56,7 +61,7 @@ class FrontPage:
             dbc.Row([
                 dbc.Col(dbc.Select(
                     id='drop_down_region',
-                    options=[{'label': name, 'value': name} for name in self.dict_names],
+                    options=[{'label': name, 'value': name} for name in self.regions],
                     value='Prague',
                     className="mb-4"
                 ), width=2)
@@ -118,9 +123,9 @@ class FrontPage:
 
 
     def __repr__(self):
-        return 'FrontPage()'
+        return 'DashPage()'
 
 
-dash_obj = FrontPage()
+dash_obj = DashPage()
 dash_page = dash_obj.app
 charts = dash_obj.charts
