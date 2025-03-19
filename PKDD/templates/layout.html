@@ -3,36 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKDD-99 Statistics - {{ title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
           padding-top: 70px;
+          color: white; /* White text color */
+        }
+        .navbar-nav.ml-auto {
+          margin-right: 15px;
+        }
+        .container-fluid {
+          padding-left: 30px;
+          padding-right: 30px;
+        }
+        .alert {
+          background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for alerts */
+          color: white; /* White text color for alerts */
+        }
+        h2, h5 {
+          color: #17a2b8; /* Text color for titles */
+        }
+        .btn-recaptcha {
+          background-color: #007bff; /* Default Bootstrap primary button color */
+          color: white;
+        }
+        .btn-recaptcha.clicked {
+          background-color: #28a745 !important; /* Green color when clicked */
         }
       </style>
-    <title>PKDD-99 Statistics - {{ title }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script>
         function onSubmit(token) {
           document.getElementById("register-id").submit();
         }
+        function changeButtonColor() {
+          document.querySelector('.btn-recaptcha').classList.add('clicked');
+        }
       </script>
 </head>
 <body class="bg-dark text-white">
 
-
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="{{ url_for('main.home') }}">PKDD-99 Statistics</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                         aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
                     </div>
-                    <div class="navbar-nav">
+                    <div class="navbar-nav ml-auto">
+                        <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
                         {% if current_user.is_authenticated %}
                         <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
                         <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
@@ -45,9 +68,9 @@
             </div>
         </nav>
 
-        <main role="main" class="container">
+        <main role="main" class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                       {% if messages %}
                         {% for category, message in messages %}
