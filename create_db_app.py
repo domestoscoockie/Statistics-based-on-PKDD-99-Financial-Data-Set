@@ -25,13 +25,11 @@ if __name__ == '__main__':
     db.init_app(app)
     t = time()
     with app.app_context():
-        # Twórz tabele tylko jeśli nie istnieją
 
         db.create_all(bind_key='statistics')
         tables = [District, Account, Trans, Loan, Order, Client,  Disposition, Card ]
         csvs: List[str] = ['csv/district.asc', 'csv/account.asc', 'csv/trans.asc', 'csv/loan.asc',\
                 'csv/order.asc', 'csv/client.asc', 'csv/disp.asc', 'csv/card.asc']  
-        # Wczytuj dane tabela po tabeli
         for table, csv in zip(tables, csvs):
             data_obj = RepairData([csv], [table])
             data = data_obj.load_data()

@@ -13,7 +13,8 @@ class DashPage:
     def __init__(self):
         super().__init__()
         self.charts = Blueprint('charts', __name__)
-        self.regions = ['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia', 'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
+        self.regions = ['Prague', 'central Bohemia', 'south Bohemia', 'west Bohemia',
+                        'north Bohemia', 'east Bohemia', 'south Moravia', 'north Moravia']
 
         region_name = ''
         with current_app.app_context():
@@ -23,12 +24,16 @@ class DashPage:
             self.df_trans_region = self.cursor_df_obj.number_of_trans_by_region()
             self.df_by_month = self.cursor_df_obj.number_of_tarns_per_month('1993')
 
-        self.app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],server=current_app, url_base_pathname='/charts/')
+        self.app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],server=current_app,
+                         url_base_pathname='/charts/')
 
         #charts
-        self.fg_score_region = px.histogram(self.df_score_region, x='status', y='loan_count', title="Loan Count by Status", color_discrete_sequence=['#636EFA'])
-        self.trans_region = px.histogram(self.df_trans_region, x='region', y='count', title="Transactions by Region", color_discrete_sequence=['#FFA07A'])
-        self.fg_by_month = px.bar(self.df_by_month, x='month', y='count', title="Transactions per Month", color_discrete_sequence=['#00CC96'])
+        self.fg_score_region = px.histogram(self.df_score_region, x='status', y='loan_count',
+                                             title="Loan Count by Status", color_discrete_sequence=['#636EFA'])
+        self.trans_region = px.histogram(self.df_trans_region, x='region', y='count',
+                                            title="Transactions by Region", color_discrete_sequence=['#FFA07A'])
+        self.fg_by_month = px.bar(self.df_by_month, x='month', y='count',
+                                             title="Transactions per Month", color_discrete_sequence=['#00CC96'])
 
         #style
         self.fg_score_region.update_layout(
@@ -51,12 +56,26 @@ class DashPage:
             )
 
         #layout
+        self.app.layout = dbc.Button(
+            id='button', 
+            children='Home page', 
+            className="nav-item nav-link", 
+            style={
+                'background': 'none',
+                'border': 'none',
+                'color': 'rgba(255,255,255,.5)',
+                'hover': {'color': 'rgba(255,255,255,.75)'}
+            }, 
+            href='/')
+        
         self.app.layout = dbc.Container([
             dbc.Row([
-                dbc.Col(html.H2("Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set", className="text-center text-info mb-2", style={'font-size': '48px', 'font-family': 'Arial'}), width=12)
+                dbc.Col(html.H2("Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set",
+                                 className="text-center text-info mb-2", style={'font-size': '48px', 'font-family': 'Arial'}), width=12)
             ]),
             dbc.Row([
-                dbc.Col(html.H5("Made by Karol Grabowski", className="text-center text-secondary mb-4", style={'font-size': '24px', 'font-family': 'Arial'}), width=12)
+                dbc.Col(html.H5("Made by Karol Grabowski", className="text-center text-secondary mb-4",
+                                 style={'font-size': '24px', 'font-family': 'Arial'}), width=12)
             ]),
             dbc.Row([
                 dbc.Col(dbc.Select(
@@ -96,7 +115,8 @@ class DashPage:
         )
         def update_score_region(drop_down):
             df = self.cursor_df_obj.score_by_region(drop_down)
-            fig = px.histogram(df, x='status', y='loan_count', title="Loan Count by Status", color_discrete_sequence=['#636EFA'])
+            fig = px.histogram(df, x='status', y='loan_count', title="Loan Count by Status",
+                                color_discrete_sequence=['#636EFA'])
             fig.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
                 paper_bgcolor='rgba(0,0,0,0)',
@@ -111,7 +131,8 @@ class DashPage:
         )
         def update_by_month(drop_down):
             df = self.cursor_df_obj.number_of_tarns_per_month(drop_down)
-            fig = px.bar(df, x='month', y='count', title="Transactions per Month", color_discrete_sequence=['#00CC96'])
+            fig = px.bar(df, x='month', y='count', title="Transactions per Month",
+                          color_discrete_sequence=['#00CC96'])
             fig.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
                 paper_bgcolor='rgba(0,0,0,0)',
