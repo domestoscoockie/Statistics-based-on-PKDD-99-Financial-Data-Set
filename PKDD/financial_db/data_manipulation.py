@@ -79,7 +79,7 @@ class RepairData:
 
             #loading data as chunks to not overload server 
             for chunk in pd.read_csv(file, sep=';', names=columns, dtype=dtype_mapping, low_memory=True,
-                                        header=0, chunksize=50000, na_values=['?', '', ' ']):
+                                        header=0, chunksize=1000, na_values=['?', '', ' ']):
                 processed_chunk = self._process_chunk(chunk, table, file)
                 chunks.append(processed_chunk)
  
@@ -101,18 +101,17 @@ class FinancialDataBase:
         self.upload_data()
 
     def upload_data(self) -> None:
-        batch_size = 1000  # Można dostosować w zależności od testów
+        batch_size = 1000  # Adjust this value based on your memory constraints and performance needs
         with Session(self.engine) as session:
             try:
                 for table, df in self.data.items():
-                    # Streamowanie danych z DataFrame
                     for i in range(0, len(df), batch_size):
                         batch = df.iloc[i:i+batch_size]
                         session.bulk_insert_mappings(
                             table, 
                             batch.replace({np.nan: None}).to_dict(orient='records'))
-                        session.commit()  # Commituj każdy batch
-                        session.expire_all()  # Zwolnij pamięć
+                        session.commit() 
+                        session.expire_all()  
                         
             except Exception as e:
                 session.rollback()
