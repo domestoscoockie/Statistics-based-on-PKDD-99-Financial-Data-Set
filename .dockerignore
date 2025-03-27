@@ -14,3 +14,4 @@ test_PKDD/
 !create_db_app.py
 !PKDD/
 !csv/
+!init.sql

@@ -78,7 +78,7 @@ cd Statistics-based-on-PKDD-99-Financial-Data-Set
 docker-compose up --build
 ```
 
-The application will be available at `http://localhost:5000`
+The application will be available at `http://localhost:8000`
 
 ---
 

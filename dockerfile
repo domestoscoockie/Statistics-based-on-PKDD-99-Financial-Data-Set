@@ -11,11 +11,14 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY PKDD/ ./PKDD/
 COPY csv/ ./csv/
-COPY app.py create_db_app.py requirements.txt ./
+COPY init.sql app.py create_db_app.py requirements.txt \
+gunicorn.sh nginx.conf start.sh  ./
 
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 ENV FLASK_ENV=production
 
-CMD ["/bin/bash", "-c", "tail -f /dev/null"]
+RUN chmod +x /app/gunicorn.sh
+
+ENTRYPOINT ["/app/gunicorn.sh"]
