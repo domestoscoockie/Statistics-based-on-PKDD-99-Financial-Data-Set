@@ -56,7 +56,6 @@ class DashPage:
             )
 
         #layout
- 
         self.app.layout = dbc.Container([
             dbc.Navbar([
                 dbc.Nav([
