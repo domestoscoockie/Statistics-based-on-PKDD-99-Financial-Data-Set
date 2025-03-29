@@ -4,7 +4,7 @@ import plotly.express as px
 import dash_bootstrap_components as dbc
 from flask import Blueprint
 from PKDD import db
-from flask import current_app
+from flask import current_app, url_for
 
 class DashPage:
     '''
@@ -56,19 +56,29 @@ class DashPage:
             )
 
         #layout
-        self.app.layout = dbc.Button(
-            id='button', 
-            children='Home page', 
-            className="nav-item nav-link", 
-            style={
-                'background': 'none',
-                'border': 'none',
-                'color': 'rgba(255,255,255,.5)',
-                'hover': {'color': 'rgba(255,255,255,.75)'}
-            }, 
-            href='/')
-        
+ 
         self.app.layout = dbc.Container([
+            dbc.Navbar([
+                dbc.Nav([
+                    dbc.NavItem(
+                        dbc.NavLink(
+                            "Home",
+                            href=url_for('main.home'),  # Direct path to Flask's root route
+                            className="nav-link",
+                            style={
+                                'color': 'rgba(255,255,255,.5)',
+                                'padding': '.5rem 1rem',
+                                'font-size': '1rem',
+                                'text-decoration': 'none',
+                                'position': 'absolute',
+                                'right': '20px',
+                                'top': '10px'
+                            }
+                        )
+                    )
+                ], className="ms-auto")
+            ], color="dark", dark=True, className="mb-4"),
+            
             dbc.Row([
                 dbc.Col(html.H2("Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set",
                                  className="text-center text-info mb-2", style={'font-size': '48px', 'font-family': 'Arial'}), width=12)
