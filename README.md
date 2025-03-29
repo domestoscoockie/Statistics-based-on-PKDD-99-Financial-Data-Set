@@ -9,8 +9,8 @@
 - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
 - [Project Structure](#project-structure)
-	- [Prerequisites](#prerequisites)
-	- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Project Roadmap](#project-roadmap)
 
 ---
@@ -91,8 +91,9 @@ Completed:
 - [X] **`Task 4`**: <strike>Automated environment setup with Docker and wait-for-it.sh</strike>
 
 Planned:
-- [ ] **`Task 5`**: Synchronize testing and application building processes, implement exception handling
-- [ ] **`Task 6`**: Enhance dashboard functionality and data visualization features
-- [ ] **`Task 7`**: Implement UI improvements and optimize Docker containers
+- [ ] **`Task 5`**: Enable https protocol
+- [ ] **`Task 6`**: Synchronize testing and application building processes, implement exception handling
+- [ ] **`Task 7`**: Enhance dashboard functionality and data visualization features
+- [ ] **`Task 8`**: Implement UI improvements and optimize Docker containers
 
 ---
