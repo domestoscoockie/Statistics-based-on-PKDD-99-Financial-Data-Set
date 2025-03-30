@@ -33,33 +33,10 @@ If you did not make this request then simply ignore this email and no changes wi
 
 
 
-def recaptcha_register_verify():
-    try:
-        # Get reCAPTCHA response
-        response = request.form.get('g-recaptcha-response')
-        
-        # Check if response exists
-        if not response:
-            current_app.logger.error("No reCAPTCHA response received")
-            abort(401, description="Please complete the reCAPTCHA")
-            
-        # Verify with Google
-        verify_response = requests.post(
-            url='https://www.google.com/recaptcha/api/siteverify',
-            data={
-                'secret': current_app.config['RECAPTCHA_SECRET_KEY'],
-                'response': response,
-                'remoteip': request.remote_addr
-            }
-        ).json()
-        
-        # Log verification response for debugging
-        current_app.logger.info(f"reCAPTCHA verification response: {verify_response}")
-        
-        if not verify_response.get('success', False):
-            current_app.logger.error(f"reCAPTCHA verification failed: {verify_response}")
-            abort(401, description="reCAPTCHA verification failed")
-            
-    except Exception as e:
-        current_app.logger.error(f"reCAPTCHA error: {str(e)}")
-        abort(401, description="Error verifying reCAPTCHA")
+# def recaptcha_register_verify():
+#     response = request.form['g-recaptcha-response']
+#     verify_response = requests.post(
+#         url=f"{current_app.config['RECAPTCHA_VERIFY_URL']}?secret={current_app.config['RECAPTCHA_KEY']}&response={response}"
+#     ).json()
+#     if not verify_response.get('success', False):
+#         abort(401, description="reCAPTCHA verification failed")

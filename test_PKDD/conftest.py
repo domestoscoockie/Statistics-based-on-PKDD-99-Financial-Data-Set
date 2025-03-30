@@ -22,9 +22,9 @@ class TestConfig:
     MAIL_USERNAME = None
     MAIL_PASSWORD = None
     MAIL_DEFAULT_SENDER = None
-    SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
-    RECAPTCHA_KEY = os.getenv('RECAPTCHA_KEY')
-    RECAPTCHA_VERIFY_URL = os.getenv('RECAPTCHA_VERIFY_URL')
+    # SITE_KEY = os.getenv('RECAPTCHA_SITE_KEY')
+    # RECAPTCHA_KEY = os.getenv('RECAPTCHA_KEY')
+    # RECAPTCHA_VERIFY_URL = os.getenv('RECAPTCHA_VERIFY_URL')
     UPLOAD_DIRECTORY = 'static/cleaned_csvs'
 
 @pytest.fixture

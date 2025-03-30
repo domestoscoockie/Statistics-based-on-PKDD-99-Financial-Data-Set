@@ -25,8 +25,8 @@ def test_get_redirect_to_home(mock_user, client):
 
 @patch('flask_login.utils._get_user')
 @patch('PKDD.users.forms.RegistrationForm')
-@patch('PKDD.users.routes.recaptcha_register_verify', return_value=None)
-def test_register_success( mock_recaptcha, mock_form, mock_user, client: Client, db_session):
+# @patch('PKDD.users.routes.recaptcha_register_verify', return_value=None)
+def test_register_success(mock_form, mock_user, client: Client, db_session):
     mock_user.return_value = Mock(is_authenticated=False)
     mock_form.return_value.validate_on_submit.return_value = True
     with Session(db_session.engines['users']) as session:   
@@ -35,7 +35,6 @@ def test_register_success( mock_recaptcha, mock_form, mock_user, client: Client,
         'email': 'test@example.com',
         'password': 'Password123!',
         'confirm_password': 'Password123!',
-        'g-recaptcha-response': 'dummy-token',
         'submit': True}, follow_redirects=False)
         assert response.status_code == 302
         assert '/login' in response.headers['Location']
@@ -43,9 +42,9 @@ def test_register_success( mock_recaptcha, mock_form, mock_user, client: Client,
 
 @patch('flask_login.utils._get_user')
 @patch('PKDD.users.forms.RegistrationForm')
-@patch('PKDD.users.routes.recaptcha_register_verify', return_value=None)
+# @patch('PKDD.users.routes.recaptcha_register_verify', return_value=None)
 @patch('PKDD.users.routes.bcrypt.generate_password_hash', return_value=bcrypt.generate_password_hash('Password123!'))
-def test_register_user_added_to_db( mock_hash_password, mock_recaptcha, mock_form,
+def test_register_user_added_to_db( mock_hash_password, mock_form,
                            mock_user, client, db_session,app):
     mock_user.return_value = Mock(is_authenticated=False)
     mock_form.return_value.validate_on_submit.return_value = True
@@ -62,7 +61,6 @@ def test_register_user_added_to_db( mock_hash_password, mock_recaptcha, mock_for
         'email': 'test@example.com',
         'password': 'Password123!',
         'confirm_password': 'Password123!',
-        'g-recaptcha-response': 'dummy-token',
         'submit': True}, follow_redirects=False)
         session.commit()
         user =  session.scalars(select(User)

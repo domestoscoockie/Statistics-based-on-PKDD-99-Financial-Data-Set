@@ -7,7 +7,7 @@ from PKDD.users.forms import RegistrationForm, LoginForm, UpdateAccountForm,\
 from flask_login import login_user, current_user, logout_user, login_required
 from PKDD.users.users_models import User 
 from PKDD import bcrypt
-from PKDD.users.utils import send_reset_email, send_delete_account_email, recaptcha_register_verify
+from PKDD.users.utils import send_reset_email, send_delete_account_email
 import requests
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -22,7 +22,7 @@ def register():
         return redirect(url_for('main.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        recaptcha_register_verify()
+        # recaptcha_register_verify()
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         with Session(db.engines['users']) as session:
             user = User(username=form.username.data, email=form.email.data,
