@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="content-section">
-    <form id="register-id" method="POST" action="">
+    <form id="register-form" method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Register</legend>
@@ -58,11 +58,12 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                <button class="g-recaptcha btn btn-primary btn-recaptcha" data-sitekey="{{ site_key }}" 
-                    data-callback='onSubmit' data-action='submit' onclick="changeButtonColor()">I'm not a robot</button>
+                <div class="g-recaptcha" 
+                     data-sitekey="{{ config['RECAPTCHA_SITE_KEY'] }}"
+                     data-callback="enableSubmit"></div>
             </div>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="btn btn-outline-info", id="submit-btn", disabled=true) }}
             </div>
         </fieldset>
     </form>
@@ -73,3 +74,12 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+function enableSubmit(token) {
+    document.getElementById("submit-btn").disabled = false;
+}
+</script>
+{% endblock scripts %}

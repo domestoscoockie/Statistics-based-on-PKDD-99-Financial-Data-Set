@@ -2,13 +2,12 @@ from dash import Dash, html, dcc, callback, Output, Input
 from PKDD.dash_page.sql_queries import CreditScore, CursorAsDataFrame
 import plotly.express as px
 import dash_bootstrap_components as dbc
-from flask import Blueprint
+from flask import Blueprint, current_app, url_for
 from PKDD import db
-from flask import current_app, url_for
 
 class DashPage:
     '''
-    Page with charts made with Dash. To make style more elegant theres also used dash_bootstrap 
+    Page with charts made with Dash. To make style more elegant theres also used dash_bootstrap
     '''
     def __init__(self):
         super().__init__()
@@ -24,10 +23,10 @@ class DashPage:
             self.df_trans_region = self.cursor_df_obj.number_of_trans_by_region()
             self.df_by_month = self.cursor_df_obj.number_of_tarns_per_month('1993')
 
-        self.app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP],server=current_app,
+        self.app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], server=current_app,
                          url_base_pathname='/charts/')
 
-        #charts
+        # Charts
         self.fg_score_region = px.histogram(self.df_score_region, x='status', y='loan_count',
                                              title="Loan Count by Status", color_discrete_sequence=['#636EFA'])
         self.trans_region = px.histogram(self.df_trans_region, x='region', y='count',
@@ -35,7 +34,7 @@ class DashPage:
         self.fg_by_month = px.bar(self.df_by_month, x='month', y='count',
                                              title="Transactions per Month", color_discrete_sequence=['#00CC96'])
 
-        #style
+        # Style
         self.fg_score_region.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
@@ -55,30 +54,28 @@ class DashPage:
             title=dict(x=0.5, xanchor='center', font=dict(size=26))
             )
 
-        #layout
- 
+        # Layout
         self.app.layout = dbc.Container([
+            dcc.Location(id='url', refresh=False),
             dbc.Navbar([
                 dbc.Nav([
                     dbc.NavItem(
-                        dbc.NavLink(
+                        html.A(
                             "Home",
-                            href=url_for('main.home'),  # Direct path to Flask's root route
+                            id='home-link',
+                            href="#",
                             className="nav-link",
                             style={
                                 'color': 'rgba(255,255,255,.5)',
                                 'padding': '.5rem 1rem',
                                 'font-size': '1rem',
-                                'text-decoration': 'none',
-                                'position': 'absolute',
-                                'right': '20px',
-                                'top': '10px'
+                                'text-decoration': 'none'
                             }
                         )
                     )
-                ], className="ms-auto")
+                ], className="ml-auto")
             ], color="dark", dark=True, className="mb-4"),
-            
+
             dbc.Row([
                 dbc.Col(html.H2("Statistics based on data from 'PKDD'99 Discovery Challenge Guide to the Financial Data Set",
                                  className="text-center text-info mb-2", style={'font-size': '48px', 'font-family': 'Arial'}), width=12)
@@ -116,8 +113,6 @@ class DashPage:
 
         self.add_callbacks()
 
-
-    
     def add_callbacks(self):
         @callback(
             Output('graph_region', 'figure'),
@@ -150,12 +145,22 @@ class DashPage:
                 title=dict(x=0.5, xanchor='center', font=dict(size=26))
             )
             return fig
-        
 
+        # JavaScript redirect
+        self.app.clientside_callback(
+            """
+            function(n_clicks) {
+                if (n_clicks) {
+                    window.location.href = '/home';
+                }
+            }
+            """,
+            Output('home-link', 'n_clicks'),
+            Input('home-link', 'n_clicks')
+        )
 
     def __repr__(self):
         return 'DashPage()'
-
 
 dash_obj = DashPage()
 dash_page = dash_obj.app
