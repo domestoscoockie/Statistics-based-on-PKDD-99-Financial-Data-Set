@@ -53,6 +53,6 @@ class User(db.Model, UserMixin):
             return None
         
         with Session(db.engines['users']) as session:
-            return session.get(User, 'user_id') 
+            return session.get(User, user_id) 
             
         

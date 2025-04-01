@@ -12,13 +12,11 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 COPY PKDD/ ./PKDD/
 COPY csv/ ./csv/
 COPY init.sql app.py create_db_app.py requirements.txt \
- nginx.conf  .env ./
+ nginx.conf .env  gunicorn.conf.py  ./
 
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 ENV FLASK_ENV=production
 
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["gunicorn", "-c", "./gunicorn.conf.py", "PKDD:create_app()"]
