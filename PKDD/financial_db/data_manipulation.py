@@ -7,9 +7,9 @@ import pandas as pd
 from typing import List, Type, Dict
 from PKDD import db
 from PKDD.financial_db.wrong_values import column_specific_replacements, global_replacements
+import warnings
 
 pd.set_option('future.no_silent_downcasting', True) #data types shouldn't be changed by pandas without concent 
-
 
 class RepairData:
     _DATE_FORMATS = {
@@ -79,7 +79,7 @@ class RepairData:
 
             #loading data as chunks to not overload server 
             for chunk in pd.read_csv(file, sep=';', names=columns, dtype=dtype_mapping, low_memory=True,
-                                        header=0, chunksize=1000, na_values=['?', '', ' ']):
+                                        header=0, chunksize=500, na_values=['?', '', ' ']):
                 processed_chunk = self._process_chunk(chunk, table, file)
                 chunks.append(processed_chunk)
  
@@ -101,7 +101,7 @@ class FinancialDataBase:
         self.upload_data()
 
     def upload_data(self) -> None:
-        batch_size = 1000  # Adjust this value based on your memory constraints and performance needs
+        batch_size = 500  # Adjust this value based on your memory constraints and performance needs
         with Session(self.engine) as session:
             try:
                 for table, df in self.data.items():

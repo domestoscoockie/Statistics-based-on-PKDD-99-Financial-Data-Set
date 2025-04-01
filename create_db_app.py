@@ -29,7 +29,6 @@ if __name__ == '__main__':
         with app.app_context():
 
             db.create_all(bind_key='statistics')
-            db.create_all(bind_key='users')
             tables = [District, Account, Trans, Loan, Order, Client,  Disposition, Card ]
             csvs: List[str] = ['csv/district.asc', 'csv/account.asc', 'csv/trans.asc', 'csv/loan.asc',\
                     'csv/order.asc', 'csv/client.asc', 'csv/disp.asc', 'csv/card.asc']  
@@ -37,6 +36,7 @@ if __name__ == '__main__':
                 data_obj = RepairData([csv], [table])
                 data = data_obj.load_data()
                 FinancialDataBase(data)
+            db.create_all(bind_key='users')
             print(time()-t)
     except sqlalchemy.exc.IntegrityError:
         print('Database already created')

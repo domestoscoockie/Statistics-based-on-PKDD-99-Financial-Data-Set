@@ -60,7 +60,7 @@ Key Features:
 
 ###  Prerequisites
 
-- Python 3.10 or higher
+- Python 3.13
 - Docker and Docker Compose
 - PostgreSQL
 - pip (Python package manager)
@@ -75,10 +75,11 @@ cd Statistics-based-on-PKDD-99-Financial-Data-Set
 
 2. Build and run with Docker Compose:
 ```bash
-docker-compose up --build
+docker-compose --profile init up db-init
 ```
-
-The application will be available at `http://localhost:8000`
+```bash
+docker-compose -f docker-compose.app.yaml up
+```
 
 ---
 
@@ -91,9 +92,9 @@ Completed:
 - [X] **`Task 4`**: <strike>Automated environment setup with Docker and wait-for-it.sh</strike>
 
 Planned:
-- [ ] **`Task 5`**: Enable https protocol
+- [ ] **`Task 5`**: Enable https protocol and recaptcha
 - [ ] **`Task 6`**: Synchronize testing and application building processes, implement exception handling
 - [ ] **`Task 7`**: Enhance dashboard functionality and data visualization features
-- [ ] **`Task 8`**: Implement UI improvements and optimize Docker containers
+- [ ] **`Task 8`**: Implement installation by uv and optimize Docker containers
 
 ---
