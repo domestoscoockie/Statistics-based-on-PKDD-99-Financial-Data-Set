@@ -75,7 +75,6 @@ def account():
                 user = session.scalars(select(User).where(User.id == current_user.id)).one_or_none()
                 user.username = form.username.data
                 user.email = form.email.data
-                print(f"Updating user: {current_user.username}, {current_user.email}")
                 session.commit()
             flash('Your account has been updated!', 'success')
             return redirect(url_for('users.account'))
