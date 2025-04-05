@@ -60,10 +60,9 @@ Key Features:
 
 ###  Prerequisites
 
-- Python 3.13
 - Docker and Docker Compose
-- PostgreSQL
-- pip (Python package manager)
+
+Note: All other dependencies (Python, PostgreSQL, etc.) are automatically handled by Docker containers.
 
 ### Installation
 
@@ -89,7 +88,7 @@ Completed:
 - [X] **`Task 1`**: <strike>Data cleaning and initial database setup with dash application foundation</strike>
 - [X] **`Task 2`**: <strike>Created interconnected pages and user authentication database</strike>
 - [X] **`Task 3`**: <strike>Implemented secure data download for authenticated users</strike>
-- [X] **`Task 4`**: <strike>Automated environment setup with Docker and wait-for-it.sh</strike>
+- [X] **`Task 4`**: <strike>Automated environment setup with Docker</strike>
 
 Planned:
 - [ ] **`Task 5`**: Enable https protocol and recaptcha

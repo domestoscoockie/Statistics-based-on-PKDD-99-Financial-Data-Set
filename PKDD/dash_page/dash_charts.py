@@ -54,11 +54,7 @@ class DashPage:
             title=dict(x=0.5, xanchor='center', font=dict(size=26))
             )
 
-<<<<<<< HEAD
-        #layout
-=======
-        # Layout
->>>>>>> d75efc3c99cdcf1a9701bf593468a97670f295f3
+        #Layout
         self.app.layout = dbc.Container([
             dcc.Location(id='url', refresh=False),
             dbc.Navbar([

@@ -32,7 +32,7 @@ def register():
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('users.login'))
     return render_template('register.html', title= 'Register',
-                            form=form, site_key=current_app.config['SITE_KEY'])
+                            form=form)
 
 
 @users.route('/login', methods=['GET','POST'])
@@ -70,10 +70,13 @@ def account():
             send_delete_account_email(current_user)
             flash('To confirm, please visit the link sent to your email', 'info')
             return redirect(url_for('users.account'))
-        elif form.submit.data:
-            current_user.username = form.username.data
-            current_user.email = form.email.data
-            db.session.commit()
+        elif form.submit.data and form.validate():
+            with Session(db.engines['users']) as session:
+                user = session.scalars(select(User).where(User.id == current_user.id)).one_or_none()
+                user.username = form.username.data
+                user.email = form.email.data
+                print(f"Updating user: {current_user.username}, {current_user.email}")
+                session.commit()
             flash('Your account has been updated!', 'success')
             return redirect(url_for('users.account'))
         
