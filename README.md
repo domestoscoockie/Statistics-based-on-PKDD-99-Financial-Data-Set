@@ -32,27 +32,35 @@ Key Features:
 
 ```sh
 └── Statistics-based-on-PKDD-99-Financial-Data-Set/
-    ├── PKDD/                          
-    │   ├── dash_page/              
-    │   ├── financial_db/              
+    ├── PKDD/                          # Main application package
+    │   ├── dash_page/                 # Dash visualization components
+    │   │   ├── dash_charts.py         # Charts and dashboard layout
+    │   │   └── sql_queries.py         # Database queries for visualizations
+    │   ├── financial_db/              # Database models and operations for Dash part of app
+    │   │   ├── data_manipulation.py   # Data cleaning and processing
+    │   │   └── financial_models.py    # SQLAlchemy models
     │   ├── static/                    
-    │   ├── templates/                 
-    │   └── users/                     
-    ├── csv/                           
-    │   ├── account.asc
-    │   ├── card.asc
-    │   ├── client.asc
-    │   ├── disp.asc
-    │   ├── district.asc
-    │   ├── loan.asc
-    │   └── order.asc
-    ├── wait-for-it.sh     
-    ├── app.py     
-    ├── create_db_app.py           
-    ├── docker-compose.yaml          
-    ├── dockerfile               
-    └── requirements.txt                 
-          
+    │   │   └── cleaned_csvs/          # Processed data files
+    │   │   └── cleaned_csvs.zip       # Data for users ready to download 
+    │   ├── templates/                 # Flask HTML templates
+    │   │   ├── ...                    
+    │   └── users/                     # User authentication module
+    │       ├── forms.py               # Flask-WTF forms
+    │       ├── routes.py              # User-related routes
+    │       └── users_models.py        # User database models                  
+    ├── docker-init/                   # Docker initialization
+    │   └── Dockerfile                 # Dockerfile for create_db_app.py database creation
+    ├── csv/                           # Original PKDD'99 dataset
+    │   ├── ...                
+    ├── app.py                        # Flask application main file 
+    ├── create_db_app.py              # Database initialization script
+    ├── docker-compose.yaml           # Main app Docker Compose 
+    ├── docker-compose.app.yaml       # init Docker Compose 
+    ├── Dockerfile                    # Main application container
+    ├── gunicorn.conf.py              # Gunicorn WSGI server config
+    ├── init.sql                      # Simple database creation script
+    ├── nginx.conf                    # Nginx reverse proxy config
+    ├── requirements.txt    
 ```
 
 
